@@ -65,7 +65,8 @@ public class NFCActivity extends ActionBarActivity {
         }
 
         NdefRecord ndef_record = msgs[0].getRecords()[0];
-        String payload = new String(ndef_record.getPayload());
+
+        unsign payload = new String(ndef_record.getPayload());
 
         TextView textView = (TextView) findViewById(R.id.nfc_message_text);
         textView.setText(payload);
