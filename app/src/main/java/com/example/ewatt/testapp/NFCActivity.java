@@ -66,11 +66,23 @@ public class NFCActivity extends ActionBarActivity {
 
         NdefRecord ndef_record = msgs[0].getRecords()[0];
 
-        unsign payload = new String(ndef_record.getPayload());
+        int payload = byteArrayToInt(ndef_record.getPayload());
+
+        String payload_str = Integer.toString(payload);
 
         TextView textView = (TextView) findViewById(R.id.nfc_message_text);
-        textView.setText(payload);
+        textView.setText(payload_str);
 
-        Log.v("NDEF", payload);
+        Log.v("NDEF", payload_str);
+    }
+
+    public static int byteArrayToInt(byte[] b)
+    {
+        int value = 0;
+        for (int i = 0; i < 4; i++) {
+            int shift = (4 - 1 - i) * 8;
+            value += (b[i] & 0x000000FF) << shift;
+        }
+        return value;
     }
 }
