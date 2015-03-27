@@ -95,4 +95,5 @@ public class NFCActivity extends ActionBarActivity {
         }
         return new String(hexChars);
     }
+
 }
