@@ -66,9 +66,7 @@ public class NFCActivity extends ActionBarActivity {
 
         NdefRecord ndef_record = msgs[0].getRecords()[0];
 
-        int payload = byteArrayToInt(ndef_record.getPayload());
-
-        String payload_str = Integer.toString(payload);
+        String payload_str = bytesToHex(ndef_record.getPayload());
 
         TextView textView = (TextView) findViewById(R.id.nfc_message_text);
         textView.setText(payload_str);
@@ -84,5 +82,17 @@ public class NFCActivity extends ActionBarActivity {
             value += (b[i] & 0x000000FF) << shift;
         }
         return value;
+    }
+
+    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+
+    public static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for ( int j = 0; j < bytes.length; j++ ) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
     }
 }
